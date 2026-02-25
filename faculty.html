@@ -1,0 +1,1857 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Mentor – Maths Point</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap"
+    rel="stylesheet" />
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --navy: #0a1628;
+      --navy-light: #0f1f38;
+      --navy-card: #111f35;
+      --gold: #c9a94b;
+      --gold-light: #e8c96d;
+      --white: #ffffff;
+      --text-muted: #8a9ab5;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--navy);
+      color: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* ── CUSTOM SCROLLBAR ── */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--navy);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(to bottom, var(--gold), var(--gold-light));
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--gold-light);
+    }
+
+    /* Firefox */
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: var(--gold) var(--navy);
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 5%;
+      background: rgba(10, 22, 40, 0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(201, 169, 75, 0.15);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+    }
+
+    .logo-icon {
+      width: 42px;
+      height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .logo-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .logo-sub {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+      text-transform: uppercase;
+      display: block;
+      margin-top: -2px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      transition: color 0.2s;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transition: transform 0.25s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--gold);
+    }
+
+    .nav-links a:hover::after,
+    .nav-links a.active::after {
+      transform: scaleX(1);
+    }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      padding: 140px 5% 70px;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .page-header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 50% 40%, rgba(201, 169, 75, 0.09) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .breadcrumb {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .breadcrumb a {
+      color: var(--gold);
+      text-decoration: none;
+    }
+
+    .breadcrumb span {
+      opacity: 0.4;
+    }
+
+    .page-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 900;
+      line-height: 1.2;
+    }
+
+    .page-title em {
+      font-style: normal;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .page-subtitle {
+      margin-top: 1rem;
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 520px;
+      margin-inline: auto;
+      line-height: 1.7;
+    }
+
+    .gold-line {
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      border-radius: 2px;
+      margin: 1.8rem auto 0;
+    }
+
+    /* ── PROFILE HERO ── */
+    .profile-section {
+      padding: 60px 5% 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .profile-card {
+      max-width: 1000px;
+      width: 100%;
+      background: var(--navy-light);
+      border: 1px solid rgba(201, 169, 75, 0.2);
+      border-radius: 28px;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      position: relative;
+    }
+
+    .profile-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    }
+
+    /* Left — photo side */
+    .profile-left {
+      background: linear-gradient(160deg, rgba(201, 169, 75, 0.08) 0%, rgba(10, 22, 40, 0.6) 100%);
+      border-right: 1px solid rgba(201, 169, 75, 0.12);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 3rem 2rem;
+      gap: 1.5rem;
+      position: relative;
+    }
+
+    .photo-ring {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      padding: 4px;
+      box-shadow: 0 0 40px rgba(201, 169, 75, 0.25);
+    }
+
+    .photo-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: linear-gradient(135deg, #1a2f50, #0f1f38);
+    }
+
+    .photo-inner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .profile-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--white);
+      text-align: center;
+      line-height: 1.3;
+    }
+
+    .profile-designation {
+      font-size: 0.82rem;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    .profile-tags {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      width: 100%;
+      margin-top: 0.5rem;
+    }
+
+    .p-tag {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 10px;
+      padding: 0.6rem 0.9rem;
+      font-size: 0.83rem;
+      color: var(--text-muted);
+    }
+
+    .p-tag .t-icon {
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .p-tag strong {
+      color: var(--white);
+      font-weight: 600;
+    }
+
+    /* Right — info side */
+    .profile-right {
+      padding: 3rem 3rem;
+    }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    .section-label::before {
+      content: '';
+      width: 24px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .profile-bio {
+      font-size: 1rem;
+      line-height: 1.85;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+
+    .profile-bio+.profile-bio {
+      margin-top: -1rem;
+    }
+
+    .stats-row {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+    }
+
+    .stat-box {
+      flex: 1;
+      min-width: 110px;
+      background: rgba(201, 169, 75, 0.06);
+      border: 1px solid rgba(201, 169, 75, 0.15);
+      border-radius: 14px;
+      padding: 1.2rem 1rem;
+      text-align: center;
+    }
+
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--gold);
+    }
+
+    .stat-num sup {
+      font-size: 1rem;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin-top: 0.3rem;
+    }
+
+    .specialization-block {
+      margin-bottom: 2rem;
+    }
+
+    .specialization-block h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 1rem;
+    }
+
+    .spec-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+
+    .spec-chip {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(201, 169, 75, 0.08);
+      border: 1px solid rgba(201, 169, 75, 0.2);
+      border-radius: 100px;
+      padding: 0.4rem 1rem;
+      font-size: 0.82rem;
+      color: var(--gold-light);
+    }
+
+    /* ── VIDEO SECTION ── */
+    .video-section {
+      padding: 0 5% 80px;
+    }
+
+    .video-inner {
+      max-width: 1000px;
+      margin-inline: auto;
+    }
+
+    h2.section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+
+    h2.section-title em {
+      font-style: normal;
+      color: var(--gold);
+    }
+
+    .section-desc {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 2.5rem;
+      line-height: 1.7;
+    }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.2rem;
+    }
+
+    .video-card {
+      background: var(--navy-card);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: transform 0.3s, border-color 0.3s;
+      cursor: pointer;
+    }
+
+    .video-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(201, 169, 75, 0.3);
+    }
+
+    .video-thumb {
+      aspect-ratio: 16/9;
+      background: linear-gradient(135deg, #0f1f38, #1a3052);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .video-thumb::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 50%, rgba(201, 169, 75, 0.08), transparent 70%);
+    }
+
+    .play-btn {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 8px 24px rgba(201, 169, 75, 0.35);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .video-card:hover .play-btn {
+      transform: scale(1.1);
+      box-shadow: 0 12px 32px rgba(201, 169, 75, 0.5);
+    }
+
+    .play-btn svg {
+      width: 20px;
+      height: 20px;
+      fill: var(--navy);
+      margin-left: 3px;
+    }
+
+    .video-thumb-label {
+      position: absolute;
+      bottom: 0.75rem;
+      left: 0.75rem;
+      background: rgba(10, 22, 40, 0.8);
+      border-radius: 6px;
+      padding: 0.3rem 0.65rem;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+    }
+
+    .video-info {
+      padding: 1.1rem 1.2rem;
+    }
+
+    .video-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.3rem;
+      line-height: 1.4;
+    }
+
+    .video-sub {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+    }
+
+    /* ── EXPERIENCE TIMELINE ── */
+    .experience-section {
+      padding: 0 5% 80px;
+    }
+
+    .exp-inner {
+      max-width: 1000px;
+      margin-inline: auto;
+    }
+
+    .timeline {
+      margin-top: 2.5rem;
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 6px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--gold), rgba(201, 169, 75, 0.1));
+    }
+
+    .tl-item {
+      position: relative;
+      margin-bottom: 2.5rem;
+    }
+
+    .tl-dot {
+      position: absolute;
+      left: -2rem;
+      top: 4px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      box-shadow: 0 0 12px rgba(201, 169, 75, 0.4);
+      border: 2px solid var(--navy);
+    }
+
+    .tl-year {
+      font-size: 0.75rem;
+      color: var(--gold);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 0.3rem;
+    }
+
+    .tl-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 0.4rem;
+    }
+
+    .tl-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    /* ── STUDENT SUCCESS ── */
+    .success-section {
+      margin: 0 5% 80px;
+      background: var(--navy-light);
+      border: 1px solid rgba(201, 169, 75, 0.15);
+      border-radius: 24px;
+      padding: 3.5rem;
+    }
+
+    .success-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+
+    .success-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 16px;
+      padding: 1.8rem;
+      transition: border-color 0.25s, background 0.25s;
+    }
+
+    .success-card:hover {
+      border-color: rgba(201, 169, 75, 0.25);
+      background: rgba(201, 169, 75, 0.04);
+    }
+
+    .quote-icon {
+      font-size: 2rem;
+      color: var(--gold);
+      opacity: 0.5;
+      margin-bottom: 0.8rem;
+      line-height: 1;
+    }
+
+    .success-text {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.75;
+      margin-bottom: 1.2rem;
+      font-style: italic;
+    }
+
+    .success-student {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .student-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--navy);
+      flex-shrink: 0;
+    }
+
+    .student-name {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    .student-exam {
+      font-size: 0.75rem;
+      color: var(--gold);
+    }
+
+    /* ── FOOTER ── */
+    .footer-bar {
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 2rem 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-bar p {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(201, 169, 75, 0.1);
+      border: 1px solid rgba(201, 169, 75, 0.25);
+      border-radius: 8px;
+      padding: 0.55rem 1.2rem;
+      text-decoration: none;
+      color: var(--gold);
+      font-size: 0.88rem;
+      font-weight: 500;
+      transition: background 0.2s;
+    }
+
+    .back-btn:hover {
+      background: rgba(201, 169, 75, 0.2);
+    }
+
+    /* ── REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .profile-card {
+        grid-template-columns: 1fr;
+      }
+
+      .profile-left {
+        border-right: none;
+        border-bottom: 1px solid rgba(201, 169, 75, 0.12);
+      }
+
+      .video-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .success-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .nav-links {
+        display: none;
+      }
+
+      .video-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stats-row {
+        gap: 0.75rem;
+      }
+
+      .success-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .profile-right {
+        padding: 2rem;
+      }
+    }
+
+    /* ══════════════════════════════════════════
+       GLOBAL FOOTER
+    ══════════════════════════════════════════ */
+    .site-footer {
+      background: #070f1e;
+      border-top: 1px solid rgba(201, 169, 75, 0.15);
+      padding: 60px 5% 0;
+      margin-top: 0;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr 1fr 1fr;
+      gap: 3rem;
+      max-width: 1200px;
+      margin-inline: auto;
+      padding-bottom: 50px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    /* Brand col */
+    .footer-brand .fb-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      margin-bottom: 1.2rem;
+    }
+
+    .footer-brand .fb-icon {
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .footer-brand .fb-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .footer-brand .fb-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .footer-brand .fb-sub {
+      font-size: 0.63rem;
+      letter-spacing: 0.15em;
+      color: #c9a94b;
+      text-transform: uppercase;
+      display: block;
+      margin-top: -2px;
+    }
+
+    .footer-brand .fb-desc {
+      font-size: 0.88rem;
+      color: #8a9ab5;
+      line-height: 1.75;
+      margin-bottom: 1.4rem;
+    }
+
+    .footer-brand .fb-contact a {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.83rem;
+      color: #8a9ab5;
+      text-decoration: none;
+      margin-bottom: 0.45rem;
+      transition: color 0.2s;
+    }
+
+    .footer-brand .fb-contact a:hover {
+      color: #c9a94b;
+    }
+
+    .footer-brand .fb-contact span {
+      color: #c9a94b;
+      font-size: 0.95rem;
+    }
+
+    /* Footer nav cols */
+    .footer-col h4 {
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #c9a94b;
+      margin-bottom: 1.2rem;
+      font-weight: 600;
+    }
+
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+
+    .footer-col ul li a {
+      font-size: 0.875rem;
+      color: #8a9ab5;
+      text-decoration: none;
+      transition: color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .footer-col ul li a::before {
+      content: '›';
+      color: #c9a94b;
+      font-size: 1rem;
+      opacity: 0.6;
+    }
+
+    .footer-col ul li a:hover {
+      color: #c9a94b;
+    }
+
+    /* Social row */
+    .footer-social {
+      display: flex;
+      gap: 0.6rem;
+      margin-top: 1.5rem;
+    }
+
+    .footer-social a {
+      width: 36px;
+      height: 36px;
+      border-radius: 9px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      text-decoration: none;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .footer-social a:hover {
+      background: rgba(201, 169, 75, 0.12);
+      border-color: rgba(201, 169, 75, 0.3);
+    }
+
+    /* Bottom bar */
+    .footer-bottom {
+      max-width: 1200px;
+      margin-inline: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding: 1.4rem 0;
+    }
+
+    .footer-bottom p {
+      font-size: 0.8rem;
+      color: #4e617e;
+    }
+
+    .footer-bottom .footer-bottom-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .footer-bottom .footer-bottom-links a {
+      font-size: 0.78rem;
+      color: #4e617e;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-bottom .footer-bottom-links a:hover {
+      color: #c9a94b;
+    }
+
+    /* ══════════════════════════════════════════
+       CTA BANNER
+    ══════════════════════════════════════════ */
+    .cta-banner {
+      margin: 0 5% 70px;
+      background: linear-gradient(135deg, rgba(201, 169, 75, 0.12) 0%, rgba(201, 169, 75, 0.04) 100%);
+      border: 1px solid rgba(201, 169, 75, 0.25);
+      border-radius: 22px;
+      padding: 3.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-banner::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #c9a94b, #e8c96d);
+    }
+
+    .cta-text h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+
+    .cta-text h2 em {
+      font-style: normal;
+      color: #c9a94b;
+    }
+
+    .cta-text p {
+      font-size: 0.95rem;
+      color: #8a9ab5;
+      max-width: 480px;
+      line-height: 1.7;
+    }
+
+    .cta-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      flex-shrink: 0;
+    }
+
+    .cta-btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: linear-gradient(135deg, #c9a94b, #e8c96d);
+      color: #0a1628;
+      font-weight: 700;
+      font-size: 0.92rem;
+      padding: 0.85rem 1.8rem;
+      border-radius: 9px;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 6px 20px rgba(201, 169, 75, 0.3);
+      white-space: nowrap;
+    }
+
+    .cta-btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(201, 169, 75, 0.45);
+    }
+
+    .cta-btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #fff;
+      font-size: 0.92rem;
+      padding: 0.85rem 1.8rem;
+      border-radius: 9px;
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+      white-space: nowrap;
+    }
+
+    .cta-btn-ghost:hover {
+      border-color: rgba(201, 169, 75, 0.5);
+      color: #c9a94b;
+    }
+
+    @media (max-width: 900px) {
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .cta-banner {
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+        padding: 2.5rem 1.8rem;
+      }
+
+      .cta-text p {
+        margin-inline: auto;
+      }
+
+      .cta-actions {
+        justify-content: center;
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 580px) {
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .cta-banner {
+        padding: 2rem 1.2rem;
+        margin: 0 3% 50px;
+      }
+
+      .cta-actions {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+      }
+
+      .cta-btn-primary,
+      .cta-btn-ghost {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+        padding: 0.9rem 1rem;
+        font-size: 0.95rem;
+      }
+
+      .cta-text h2 {
+        font-size: 1.3rem;
+      }
+
+      .cta-text p {
+        font-size: 0.88rem;
+      }
+    }
+
+
+    /* ══════════════════════════════════════
+       HAMBURGER + MOBILE DRAWER
+    ══════════════════════════════════════ */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      width: 42px;
+      height: 42px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 9px;
+      cursor: pointer;
+      padding: 9px 8px;
+      transition: background 0.2s, border-color 0.2s;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 300;
+    }
+
+    .hamburger:hover {
+      background: rgba(201, 169, 75, 0.15);
+      border-color: rgba(201, 169, 75, 0.4);
+    }
+
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      border-radius: 2px;
+      background: #ffffff;
+      transition: transform 0.35s ease, opacity 0.25s ease, background 0.2s;
+      transform-origin: center;
+    }
+
+    .hamburger.open span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+      background: var(--gold);
+    }
+
+    .hamburger.open span:nth-child(2) {
+      opacity: 0;
+      transform: scaleX(0);
+    }
+
+    .hamburger.open span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+      background: var(--gold);
+    }
+
+    /* Drawer backdrop */
+    .mobile-drawer {
+      position: fixed;
+      inset: 0;
+      z-index: 250;
+      pointer-events: none;
+      visibility: hidden;
+    }
+
+    .mobile-drawer.open {
+      pointer-events: all;
+      visibility: visible;
+    }
+
+    .drawer-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(4, 10, 22, 0.8);
+      backdrop-filter: blur(4px);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .mobile-drawer.open .drawer-overlay {
+      opacity: 1;
+    }
+
+    /* Slide-in panel */
+    .drawer-panel {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: min(310px, 88vw);
+      background: #0a1628;
+      border-left: 1px solid rgba(201, 169, 75, 0.2);
+      box-shadow: -12px 0 40px rgba(0, 0, 0, 0.5);
+      display: flex;
+      flex-direction: column;
+      transform: translateX(100%);
+      transition: transform 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow-y: auto;
+    }
+
+    .mobile-drawer.open .drawer-panel {
+      transform: translateX(0);
+    }
+
+    .drawer-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 1.4rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      flex-shrink: 0;
+    }
+
+    .drawer-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+    }
+
+    .drawer-logo .dl-icon {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .drawer-logo .dl-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .drawer-logo .dl-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .drawer-close {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--white);
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, color 0.2s;
+      line-height: 1;
+    }
+
+    .drawer-close:hover {
+      background: rgba(201, 169, 75, 0.2);
+      color: var(--gold);
+    }
+
+    .drawer-nav {
+      padding: 1.2rem 1rem;
+      flex: 1;
+    }
+
+    .drawer-nav-label {
+      font-size: 0.67rem;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin: 0 0.4rem 0.6rem;
+      padding-top: 0.5rem;
+    }
+
+    .drawer-nav ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      margin-bottom: 1rem;
+    }
+
+    .drawer-nav ul li a {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      padding: 0.72rem 0.9rem;
+      border-radius: 10px;
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 0.93rem;
+      font-weight: 500;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .drawer-nav ul li a .nav-icon {
+      font-size: 1.05rem;
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .drawer-nav ul li a:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--white);
+    }
+
+    .drawer-nav ul li a.active {
+      background: rgba(201, 169, 75, 0.12);
+      color: var(--gold);
+      font-weight: 600;
+    }
+
+    .drawer-cta {
+      padding: 1rem 1.2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      flex-shrink: 0;
+    }
+
+    .drawer-cta a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      padding: 0.8rem;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 700;
+      transition: all 0.2s;
+    }
+
+    .dcta-primary {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      color: var(--navy) !important;
+      box-shadow: 0 4px 16px rgba(201, 169, 75, 0.25);
+    }
+
+    .dcta-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(201, 169, 75, 0.4) !important;
+    }
+
+    .dcta-ghost {
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--white) !important;
+    }
+
+    .dcta-ghost:hover {
+      border-color: rgba(201, 169, 75, 0.4) !important;
+      color: var(--gold) !important;
+    }
+
+    .drawer-contact {
+      padding: 0.8rem 1.2rem 1.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      flex-shrink: 0;
+    }
+
+    .drawer-contact a {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .drawer-contact a:hover {
+      color: var(--gold);
+    }
+
+    /* Show hamburger, hide regular nav on mobile */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none !important;
+      }
+
+      .hamburger {
+        display: flex !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- PAGE LOADER -->
+  <div id="pageLoader"
+    style="position:fixed;inset:0;z-index:9998;background:#0a1628;display:flex;align-items:center;justify-content:center;transition:opacity 0.5s ease;pointer-events:all;">
+    <div style="text-align:center;">
+      <div
+        style="width:44px;height:44px;border-radius:50%;border:3px solid rgba(201,169,75,0.2);border-top-color:#c9a94b;animation:loaderSpin 0.75s linear infinite;margin:0 auto 1rem;">
+      </div>
+      <div style="font-family:'Playfair Display',serif;font-size:1rem;color:#c9a94b;letter-spacing:0.12em;">MATHS POINT
+      </div>
+    </div>
+    <style>
+      @keyframes loaderSpin {
+        to {
+          transform: rotate(360deg)
+        }
+      }
+    </style>
+  </div>
+
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="nav-logo">
+      <div class="logo-icon">
+        <img src="Logo-modified.png" alt="Maths Point Logo">
+      </div>
+      <div>
+        <span class="logo-text">Maths Point</span>
+        <span class="logo-sub">by Mr. Neetesh Kumar Singh</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="courses.html">Courses</a></li>
+      <li><a href="faculty.html" class="active">Your Mentor</a></li>
+      <li><a href="testimonials.html">Testimonials</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+  <!-- MOBILE DRAWER -->
+  <div class="mobile-drawer" id="mobileDrawer">
+    <div class="drawer-overlay" id="drawerOverlay"></div>
+    <div class="drawer-panel">
+      <div class="drawer-header">
+        <a href="index.html" class="drawer-logo">
+          <div class="dl-icon">
+            <img src="Logo-modified.png" alt="Maths Point Logo">
+          </div>
+          <span class="dl-name">Maths Point</span>
+        </a>
+        <button class="drawer-close" id="drawerClose">&#10005;</button>
+      </div>
+      <div class="drawer-nav">
+        <div class="drawer-nav-label">Navigation</div>
+        <ul>
+          <li><a href="index.html"><span class="nav-icon">🏠</span>Home</a></li>
+          <li><a href="about.html"><span class="nav-icon">🏛️</span>About Us</a></li>
+          <li><a href="courses.html"><span class="nav-icon">📚</span>Courses</a></li>
+          <li><a href="faculty.html" class="active"><span class="nav-icon">🎓</span>Your Mentor</a></li>
+          <li><a href="testimonials.html"><span class="nav-icon">⭐</span>Testimonials</a></li>
+          <li><a href="contact.html"><span class="nav-icon">✉️</span>Contact</a></li>
+        </ul>
+        <div class="drawer-nav-label">Programs</div>
+        <ul>
+          <li><a href="courses.html"><span class="nav-icon">🚀</span>JEE Mains &amp; Advanced</a></li>
+          <li><a href="courses.html"><span class="nav-icon">🎯</span>NIMCET</a></li>
+          <li><a href="courses.html"><span class="nav-icon">🏛️</span>CUET-UG / PG</a></li>
+          <li><a href="courses.html"><span class="nav-icon">📘</span>Class 10 &amp; 11–12</a></li>
+        </ul>
+      </div>
+      <div class="drawer-cta">
+        <a href="courses.html" class="dcta-primary">Enroll Now &#8594;</a>
+        <a href="contact.html" class="dcta-ghost">Contact Us</a>
+      </div>
+      <div class="drawer-contact">
+        <a href="tel:+919876543210">📞 +91 98765 43210</a>
+        <a href="mailto:mathspoint@gmail.com">✉️ mathspoint@gmail.com</a>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="breadcrumb">
+      <a href="index.html">Home</a>
+      <span>›</span> Your Mentor
+    </div>
+    <h1 class="page-title">Meet Your <em>Mentor</em></h1>
+    <p class="page-subtitle">One dedicated educator. Thousands of transformed students. A lifetime of mathematical
+      passion.</p>
+    <div class="gold-line"></div>
+  </div>
+
+  <!-- PROFILE CARD -->
+  <section class="profile-section">
+    <div class="profile-card reveal">
+
+      <!-- LEFT -->
+      <div class="profile-left">
+        <div class="photo-ring">
+          <div class="photo-inner">
+            <img src="img.jpeg" alt="Mr. Neetesh Kumar Singh">
+          </div>
+        </div>
+        <div class="profile-name">Mr. Neetesh Kumar Singh</div>
+        <div class="profile-designation">Founder & Lead Educator</div>
+
+        <div class="profile-tags">
+          <div class="p-tag">
+            <span class="t-icon">🎓</span>
+            <div><strong>M.Sc. Maths Honours</strong><br />Specialization</div>
+          </div>
+          <div class="p-tag">
+            <span class="t-icon">📅</span>
+            <div><strong>10+ Years</strong><br />Teaching Experience</div>
+          </div>
+          <div class="p-tag">
+            <span class="t-icon">🏫</span>
+            <div><strong>Maths Point</strong><br />Founder & Solo Educator</div>
+          </div>
+          <div class="p-tag">
+            <span class="t-icon">📍</span>
+            <div><strong>Offline & Online</strong><br />Mode of Teaching</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT -->
+      <div class="profile-right">
+        <div class="section-label">About the Mentor</div>
+
+        <p class="profile-bio">
+          Mr. Neetesh Kumar Singh is the founder and sole educator at Maths Point — a coaching centre built on the
+          belief that every student deserves undivided, expert attention. With over <strong
+            style="color:var(--white)">10 years of dedicated teaching experience</strong> and a postgraduate
+          specialization in <strong style="color:var(--white)">Mathematics Honours</strong>, he brings both academic
+          depth and genuine passion to every class.
+        </p>
+        <p class="profile-bio" style="margin-top:1rem;">
+          What sets Mr. Singh apart is his rare ability to break down the most complex mathematical concepts into clear,
+          intuitive steps — making the subject approachable for students at every level, from Class 10 to competitive
+          entrance exams like JEE, NIMCET, and CUET.
+        </p>
+
+        <div class="stats-row" style="margin-top:2rem;">
+          <div class="stat-box">
+            <div class="stat-num">10<sup>+</sup></div>
+            <div class="stat-label">Years Teaching</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">500<sup>+</sup></div>
+            <div class="stat-label">Students Taught</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">98<sup>%</sup></div>
+            <div class="stat-label">Success Rate</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">1</div>
+            <div class="stat-label">Dedicated Mentor</div>
+          </div>
+        </div>
+
+        <div class="specialization-block">
+          <h4>Areas of Specialization</h4>
+          <div class="spec-chips">
+            <span class="spec-chip">✦ Maths Honours (PG)</span>
+            <span class="spec-chip">✦ JEE Mathematics</span>
+            <span class="spec-chip">✦ NIMCET Prep</span>
+            <span class="spec-chip">✦ CUET-UG / PG</span>
+            <span class="spec-chip">✦ Board Exam Coaching</span>
+            <span class="spec-chip">✦ Calculus & Algebra</span>
+            <span class="spec-chip">✦ Coordinate Geometry</span>
+            <span class="spec-chip">✦ Doubt Clearing</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE TIMELINE -->
+  <section class="experience-section">
+    <div class="exp-inner">
+      <div class="section-label reveal">Journey</div>
+      <h2 class="section-title reveal">Teaching <em>Experience</em></h2>
+      <div class="timeline">
+        <div class="tl-item reveal">
+          <div class="tl-dot"></div>
+          <div class="tl-year">2014 – Present</div>
+          <div class="tl-title">Founder & Lead Educator — Maths Point</div>
+          <div class="tl-desc">Established Maths Point as a personal coaching centre focused on delivering high-quality,
+            one-to-one Mathematics education. Personally conducts every class for students from Class 10 to PG entrance
+            level.</div>
+        </div>
+        <div class="tl-item reveal">
+          <div class="tl-dot"></div>
+          <div class="tl-year">2012 – 2014</div>
+          <div class="tl-title">Mathematics Tutor — Private Coaching</div>
+          <div class="tl-desc">Began teaching Mathematics to school and college students, developing a unique
+            methodology for simplifying abstract concepts through visual reasoning and step-by-step problem solving.
+          </div>
+        </div>
+        <div class="tl-item reveal">
+          <div class="tl-dot"></div>
+          <div class="tl-year">Academic Background</div>
+          <div class="tl-title">M.Sc. Mathematics Honours</div>
+          <div class="tl-desc">Completed postgraduate studies with a specialization in Mathematics Honours — building a
+            deep, research-level understanding of advanced mathematics that directly enriches his teaching.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VIDEO INTRODUCTION -->
+  <section class="video-section">
+    <div class="video-inner">
+      <div class="section-label reveal">Meet the Mentor</div>
+      <h2 class="section-title reveal">Video <em>Introductions</em></h2>
+      <p class="section-desc reveal">Get to know Mr. Neetesh Kumar Singh through these short video introductions — his
+        teaching style, philosophy, and what to expect at Maths Point.</p>
+
+      <div class="video-grid">
+
+        <div class="video-card reveal">
+          <div class="video-thumb">
+            <div class="play-btn">
+              <svg viewBox="0 0 24 24">
+                <polygon points="5 3 19 12 5 21 5 3" />
+              </svg>
+            </div>
+            <div class="video-thumb-label">2:30 min</div>
+          </div>
+          <div class="video-info">
+            <div class="video-title">Welcome to Maths Point</div>
+            <div class="video-sub">Introduction by Mr. Neetesh Kumar Singh</div>
+          </div>
+        </div>
+
+        <div class="video-card reveal">
+          <div class="video-thumb">
+            <div class="play-btn">
+              <svg viewBox="0 0 24 24">
+                <polygon points="5 3 19 12 5 21 5 3" />
+              </svg>
+            </div>
+            <div class="video-thumb-label">3:15 min</div>
+          </div>
+          <div class="video-info">
+            <div class="video-title">My Teaching Philosophy</div>
+            <div class="video-sub">How I make Maths simple & enjoyable</div>
+          </div>
+        </div>
+
+        <div class="video-card reveal">
+          <div class="video-thumb">
+            <div class="play-btn">
+              <svg viewBox="0 0 24 24">
+                <polygon points="5 3 19 12 5 21 5 3" />
+              </svg>
+            </div>
+            <div class="video-thumb-label">4:00 min</div>
+          </div>
+          <div class="video-info">
+            <div class="video-title">JEE & NIMCET Strategy</div>
+            <div class="video-sub">Exam approach & preparation tips</div>
+          </div>
+        </div>
+
+      </div>
+      <p style="margin-top:1.2rem; font-size:0.82rem; color:var(--text-muted); text-align:center;">
+        Replace video cards above with actual YouTube embeds or recorded video links.
+      </p>
+    </div>
+  </section>
+
+  <!-- STUDENT SUCCESS STORIES -->
+  <div class="success-section">
+    <div class="section-label reveal">Student Stories</div>
+    <h2 class="section-title reveal">Success <em>Stories</em></h2>
+    <div class="success-grid">
+
+      <div class="success-card reveal">
+        <div class="quote-icon">"</div>
+        <p class="success-text">Sir's way of explaining Calculus changed everything for me. I went from failing to
+          scoring 94 in Class 12 Boards. Maths Point is truly transformative.</p>
+        <div class="success-student">
+          <div class="student-avatar">RK</div>
+          <div>
+            <div class="student-name">Rahul Kumar</div>
+            <div class="student-exam">Class 12 Board · 94% in Maths</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="success-card reveal">
+        <div class="quote-icon">"</div>
+        <p class="success-text">I cracked NIMCET on my first attempt after joining Mr. Singh's batch. The mock test
+          strategy and his personal guidance made all the difference.</p>
+        <div class="success-student">
+          <div class="student-avatar">PS</div>
+          <div>
+            <div class="student-name">Priya Sharma</div>
+            <div class="student-exam">NIMCET Qualifier · NIT Allahabad</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="success-card reveal">
+        <div class="quote-icon">"</div>
+        <p class="success-text">Sir personally tracks your progress. He noticed I was weak in Trigonometry and scheduled
+          extra sessions for me. That personal attention is priceless.</p>
+        <div class="success-student">
+          <div class="student-avatar">AM</div>
+          <div>
+            <div class="student-name">Arjun Mishra</div>
+            <div class="student-exam">JEE Mains Qualifier · 2024</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+
+
+  <!-- ══ CTA BANNER ══ -->
+  <div class="cta-banner">
+    <div class="cta-text">
+      <h2>Learn Directly From <em>Mr. Neetesh Kumar Singh</em></h2>
+      <p>Experience 10+ years of teaching expertise first-hand. Enroll now and get personal attention in every class.
+      </p>
+    </div>
+    <div class="cta-actions">
+      <a href="courses.html" class="cta-btn-primary">Enroll Now →</a>
+      <a href="contact.html" class="cta-btn-ghost">Get in Touch</a>
+    </div>
+  </div>
+
+  <!-- ══ SITE FOOTER ══ -->
+  <footer class="site-footer">
+    <div class="footer-grid">
+
+      <!-- Brand -->
+      <div class="footer-brand">
+        <a href="index.html" class="fb-logo">
+          <div class="fb-icon">
+            <img src="Logo-modified.png" alt="Maths Point Logo">
+          </div>
+          <div>
+            <span class="fb-name">Maths Point</span>
+            <span class="fb-sub">by Mr. Neetesh Kumar Singh</span>
+          </div>
+        </a>
+        <p class="fb-desc">A personal coaching centre dedicated to making Mathematics clear, confident, and conquerable
+          — for every student, every level.</p>
+        <div class="fb-contact">
+          <a href="tel:+9193348 81104"><span>📞</span> +91 93348 81104</a>
+          <a href="tel:+9179 7905 3244"><span>💬</span> +91 79 7905 3244 (WhatsApp)</a>
+          <a href="mailto:mathspointmuzaffarpur@gmail.com"><span>✉️</span> mathspointmuzaffarpur@gmail.com</a>
+          <a href="contact.html"><span>📍</span> Miscot Lane No - 03, Jubba Sahni Park, Muzaffarpur, Bihar - 842001</a>
+        </div>
+        <div class="footer-social">
+          <a href="#" title="Facebook">📘</a>
+          <a href="#" title="Instagram">📸</a>
+          <a href="#" title="YouTube">▶️</a>
+          <a href="#" title="WhatsApp">💬</a>
+        </div>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="courses.html">All Courses</a></li>
+          <li><a href="faculty.html">Your Mentor</a></li>
+          <li><a href="testimonials.html">Testimonials</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </div>
+
+      <!-- Programs -->
+      <div class="footer-col">
+        <h4>Programs</h4>
+        <ul>
+          <li><a href="courses.html">Class 10 Maths</a></li>
+          <li><a href="courses.html">Class 11–12 Maths</a></li>
+          <li><a href="courses.html">JEE Mains & Advanced</a></li>
+          <li><a href="courses.html">NIMCET</a></li>
+          <li><a href="courses.html">CUET-UG / PG</a></li>
+          <li><a href="courses.html">Crash Course</a></li>
+        </ul>
+      </div>
+
+      <!-- Class Timings -->
+      <div class="footer-col">
+        <h4>Class Timings</h4>
+        <ul>
+          <li><a href="contact.html">Mon–Fri · 7–9 AM</a></li>
+          <li><a href="contact.html">Mon–Fri · 5–8 PM</a></li>
+          <li><a href="contact.html">Saturday · 9 AM–1 PM</a></li>
+          <li><a href="contact.html">Sunday · Closed</a></li>
+        </ul>
+        <div style="margin-top:1.5rem;">
+          <a href="courses.html"
+            style="display:inline-flex;align-items:center;gap:0.5rem;background:linear-gradient(135deg,#c9a94b,#e8c96d);color:#0a1628;font-weight:700;font-size:0.82rem;padding:0.6rem 1.2rem;border-radius:8px;text-decoration:none;">
+            Enroll Now →
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 Maths Point · Mr. Neetesh Kumar Singh · All Rights Reserved</p>
+      <div class="footer-bottom-links">
+        <a href="about.html">About</a>
+        <a href="courses.html">Courses</a>
+        <a href="contact.html">Contact</a>
+        <a href="testimonials.html">Testimonials</a>
+      </div>
+    </div>
+  </footer>
+  <script src="main.js"></script>
+</body>
+
+</html>
