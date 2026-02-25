@@ -56,7 +56,7 @@ It is designed to attract students and help them easily explore courses and conn
 
 📞 Phone: +91 93348 81104  
 📧 Email: mathspointmuzaffarpur@gmail.com  
-📍 Address: Miscot Lane No – 03, Jubba Sahni Park, Muzaffarpur, Bihar – 842001 :contentReference[oaicite:2]{index=2}
+📍 Address: Miscot Lane No – 03, Jubba Sahni Park, Muzaffarpur, Bihar – 842001
 
 ## 📁 Usage
 
@@ -76,5 +76,5 @@ You can use this project as:
 
 ---
 
-Made with ❤️ by [Your Name]  
+Made with ❤️ by Amrit Sugandh  
 Based on the live website design.
